@@ -1,0 +1,60 @@
+# dotnet-tas-client-sdk
+
+Epic Goal  
+> Build a **.NET 9** client SDK that authenticates to Tanzu Application Service (TAS) foundations via username + password → bearer-token flow (with automatic refresh) and exposes raw-JSON GET helpers for foundation, org, space, app/component, and process data—without pagination—using in-memory credential storage.
+
+Status Table (auto-updated)
+
+
+- [ ] **Feature 1: Authentication & Token Management**
+    - [ ] **Story 1.1: Auth Token Acquisition (`auth-token-acquisition.feature`)**
+        - [ ] Add BDD file `Common.Tests/BDD/auth-token-acquisition/auth-token-acquisition.feature`.
+        - [ ] Implement `AuthenticationService.cs` → `GetBearerTokenAsync(string username, string password)`.
+        - [ ] Create `TokenModel.cs` for raw-JSON deserialization.
+        - [ ] Wire `AuthenticationService` into `TasClient.cs` constructor.
+    - [ ] **Story 1.2: Token Refresh Handling (`token-refresh.feature`)**
+        - [ ] Add BDD file `Common.Tests/BDD/token-refresh/token-refresh.feature`.
+        - [ ] Implement `ITokenRefresher.cs` → `RefreshAsync(string refreshToken)`.
+        - [ ] Integrate automatic refresh into `HttpClientHandler` pipeline.
+        - [ ] Unit-test refresh-expiry edge cases in `TokenRefresherTests.cs`.
+
+- [ ] **Feature 2: Client Initialization & Configuration**
+    - [ ] **Story 2.1: Initialize Client (`client-initialization.feature`)**
+        - [ ] Add BDD file `Common.Tests/BDD/client-initialization/client-initialization.feature`.
+        - [ ] Implement `TasClientOptions.cs` (foundation URI, username, password).
+        - [ ] Build `TasClientBuilder.cs` fluent builder for options validation.
+        - [ ] Register `TasClient` + dependencies in DI (`ServiceCollectionExtensions.cs`).
+
+- [ ] **Feature 3: Foundation / Org / Space Retrieval**
+    - [ ] **Story 3.1: Retrieve Foundation Info (`foundation-info.feature`)**
+        - [ ] Add BDD file `Common.Tests/BDD/foundation-info/foundation-info.feature`.
+        - [ ] Implement `FoundationApi.cs` → `GetFoundationAsync()` (raw JSON).
+        - [ ] Expose `TasClient.GetFoundationAsync()`.
+    - [ ] **Story 3.2: Retrieve Org & Space Info (`org-space-info.feature`)**
+        - [ ] Add BDD file `Common.Tests/BDD/org-space-info/org-space-info.feature`.
+        - [ ] Implement `OrgSpaceApi.cs` → `GetAllOrgsAsync()` and `GetSpacesForOrgAsync(orgId)`.
+        - [ ] Expose `TasClient.GetOrgsAsync()` and `TasClient.GetSpacesAsync(orgId)`.
+        - [ ] Add resilience policies for 429/5xx in `OrgSpaceApi.cs`.
+
+- [ ] **Feature 4: Application & Process Retrieval**
+    - [ ] **Story 4.1: Retrieve App / Component Info (`app-component-info.feature`)**
+        - [ ] Add BDD file `Common.Tests/BDD/app-component-info/app-component-info.feature`.
+        - [ ] Implement `AppApi.cs` → `GetAppsAsync(spaceId)` (raw JSON).
+        - [ ] Expose `TasClient.GetAppsAsync(spaceId)`.
+        - [ ] Add integration test `AppApiIntegrationTests.cs` for 200/404.
+    - [ ] **Story 4.2: Retrieve Process Info (`process-info.feature`)**
+        - [ ] Add BDD file `Common.Tests/BDD/process-info/process-info.feature`.
+        - [ ] Implement `ProcessApi.cs` → `GetProcessesAsync(appId)`.
+        - [ ] Expose `TasClient.GetProcessesAsync(appId)`.
+        - [ ] Validate token refresh on long-running calls in `ProcessApiTests.cs`.
+
+References  
+- Cloud Foundry v3 API Reference – all resources (apps, processes, orgs, spaces)  <https://v3-apidocs.cloudfoundry.org/>  
+- UAA OAuth2 & Refresh-Token flow  <https://docs.cloudfoundry.org/api/uaa/>  
+- Org/Space concepts in Tanzu Application Service  <https://techdocs.broadcom.com/us/en/vmware-tanzu/platform/tanzu-platform-for-cloud-foundry/6-0/tpcf/roles.html>  
+- Planning TAS orgs and spaces  <https://techdocs.broadcom.com/us/en/vmware-tanzu/platform/tanzu-platform-for-cloud-foundry/6-0/tpcf/orgs-and-spaces.html>  
+- Finding your Cloud Foundry API endpoint  <https://docs.cloudfoundry.org/running/cf-api-endpoint.html>  
+- Attaching a TAS foundation as a data source (foundation topology)  <https://techdocs.broadcom.com/us/en/vmware-tanzu/platform/tanzu-platform/saas/tnz-platform/data-sources-attach-tas-foundation.html>  
+- Authentication & enterprise SSO in TAS for VMs  <https://techdocs.broadcom.com/us/en/vmware-tanzu/platform/tanzu-platform-for-cloud-foundry/4-0/tpcf/auth-sso.html>  
+- What’s new in .NET 9 – SDK & runtime overview  <https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-9/overview>  
+- Official .NET 9 download page  <https://dotnet.microsoft.com/en-us/download/dotnet/9.0>
