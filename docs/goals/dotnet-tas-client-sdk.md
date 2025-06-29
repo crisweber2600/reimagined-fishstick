@@ -6,37 +6,37 @@ Epic Goal
 Status Table (auto-updated)
 
 
-- [ ] **Feature 1: Authentication & Token Management**
-    - [ ] **Story 1.1: Auth Token Acquisition (`auth-token-acquisition.feature`)**
+ - [x] **Feature 1: Authentication & Token Management**
+    - [x] **Story 1.1: Auth Token Acquisition (`auth-token-acquisition.feature`)**
         - [x] Add BDD file `Common.Tests/BDD/auth-token-acquisition/auth-token-acquisition.feature`.
         - [x] Implement `AuthenticationService.cs` → `GetBearerTokenAsync(string username, string password)`.
         - [x] Create `TokenModel.cs` for raw-JSON deserialization.
         - [x] Wire `AuthenticationService` into `TasClient.cs` constructor.
-    - [ ] **Story 1.2: Token Refresh Handling (`token-refresh.feature`)**
+    - [x] **Story 1.2: Token Refresh Handling (`token-refresh.feature`)**
         - [x] Add BDD file `Common.Tests/BDD/token-refresh/token-refresh.feature`.
         - [x] Implement `ITokenRefresher.cs` → `RefreshAsync(string refreshToken)`.
         - [x] Integrate automatic refresh into `HttpClientHandler` pipeline.
         - [x] Unit-test refresh-expiry edge cases in `TokenRefresherTests.cs`.
-    - [ ] Implement Authentication & Token Management
+    - [x] Implement Authentication & Token Management
 
-- [ ] **Feature 2: Client Initialization & Configuration**
-    - [ ] **Story 2.1: Initialize Client (`client-initialization.feature`)**
+ - [x] **Feature 2: Client Initialization & Configuration**
+    - [x] **Story 2.1: Initialize Client (`client-initialization.feature`)**
         - [x] Add BDD file `Common.Tests/BDD/client-initialization/client-initialization.feature`.
         - [x] Implement `TasClientOptions.cs` (foundation URI, username, password).
         - [x] Build `TasClientBuilder.cs` fluent builder for options validation.
         - [x] Register `TasClient` + dependencies in DI (`ServiceCollectionExtensions.cs`).
-    - [ ] Implement Client Initialization & Configuration
+    - [x] Implement Client Initialization & Configuration
 
-- [ ] **Feature 3: Foundation / Org / Space Retrieval**
+ - [x] **Feature 3: Foundation / Org / Space Retrieval**
     - [x] **Story 3.1: Retrieve Foundation Info (`foundation-info.feature`)**
         - [x] Add BDD file `Common.Tests/BDD/foundation-info/foundation-info.feature`.
         - [x] Implement `FoundationApi.cs` → `GetFoundationAsync()` (raw JSON).
         - [x] Expose `TasClient.GetFoundationAsync()`.
-    - [ ] **Story 3.2: Retrieve Org & Space Info (`org-space-info.feature`)**
-        - [ ] Add BDD file `Common.Tests/BDD/org-space-info/org-space-info.feature`.
-        - [ ] Implement `OrgSpaceApi.cs` → `GetAllOrgsAsync()` and `GetSpacesForOrgAsync(orgId)`.
-        - [ ] Expose `TasClient.GetOrgsAsync()` and `TasClient.GetSpacesAsync(orgId)`.
-        - [ ] Add resilience policies for 429/5xx in `OrgSpaceApi.cs`.
+    - [x] **Story 3.2: Retrieve Org & Space Info (`org-space-info.feature`)**
+        - [x] Add BDD file `Common.Tests/BDD/org-space-info/org-space-info.feature`.
+        - [x] Implement `OrgSpaceApi.cs` → `GetAllOrgsAsync()` and `GetSpacesForOrgAsync(orgId)`.
+        - [x] Expose `TasClient.GetOrgsAsync()` and `TasClient.GetSpacesAsync(orgId)`.
+        - [x] Add resilience policies for 429/5xx in `OrgSpaceApi.cs`.
 
 - [ ] **Feature 4: Application & Process Retrieval**
     - [ ] **Story 4.1: Retrieve App / Component Info (`app-component-info.feature`)**
@@ -67,5 +67,8 @@ References
 - [x] Build `TasClientBuilder.cs` fluent builder for options validation
 - [x] Register `TasClient` + dependencies in DI (`ServiceCollectionExtensions.cs`)
 - [x] Add BDD file `Common.Tests/BDD/foundation-info/foundation-info.feature`
+- [x] Add step definitions for auth and token refresh features
+- [x] Add BDD file `Common.Tests/BDD/org-space-info/org-space-info.feature`
+- [x] Implement OrgSpaceApi and TasClient methods
 - [ ] Ensure next step is clear for Codex
 - [ ] Start next task after merge

@@ -3,6 +3,7 @@
 This repository contains a basic .NET solution with a library, an example application and unit tests. The library now includes a HTTP message handler that automatically refreshes expired bearer tokens.
 It also supports initializing a `TasClient` using `TasClientBuilder` and registering it in dependency injection.
 The client can now retrieve foundation information through `FoundationApi`.
+It also supports authentication, token refresh and retrieving org and space data.
 
 ## Projects
 - **Common** - reusable library code.
@@ -22,6 +23,8 @@ After building, execute the tests with the terminal logger disabled:
 
 ```bash
 dotnet test -tl:off
+dotnet test Common.UnitTests/Common.UnitTests.csproj /p:CollectCoverage=true
+dotnet test Common.Test/Common.Test.csproj /p:CollectCoverage=true
 ```
 
 The build step ensures that all projects compile successfully prior to running the test suite.

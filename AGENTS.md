@@ -9,6 +9,7 @@
 - Every BDD scenario must include a concrete **Examples** table.
 - Store all new `.feature` files under `Common.Tests/BDD/`.
 - Create a matching step definition `.cs` file in the same folder whenever adding a `.feature` file.
+- After completing a story, mark its tasks as `[x]` in `docs/goals/*.md` so the next run has clear guidance.
 - Keep `README.md` updated with build instructions and feature summaries.
 - Write all library code as **clients** or **services** backed by interfaces.
 - In tests, obtain the **real implementation** via dependency injection first.
@@ -28,6 +29,8 @@
 | Run unit tests       | `dotnet test --no-build` |
 | Run BDD scenarios    | `dotnet test`  |
 | Coverage threshold   | `dotnet test <project> /p:CollectCoverage=true` |
+
+Codex must run both unit and integration tests with coverage enabled before committing.
 
 Codex **must** execute the full suite (incl. coverage) before proposing a commit.
 
