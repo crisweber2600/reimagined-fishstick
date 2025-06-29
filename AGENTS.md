@@ -8,6 +8,7 @@
 - Always propose a design first and request feedback before coding.
 - Every BDD scenario must include a concrete **Examples** table.
 - Store all new `.feature` files under `Common.Tests/BDD/`.
+- Keep `README.md` updated with build instructions and feature summaries.
 
 ## Conventions
 - **Epics** → `docs/goals/<slug>.md`
@@ -32,9 +33,10 @@ Codex **must** execute the full suite (incl. coverage) before proposing a commit
    b. When approved, implement code & tests until scenarios pass and coverage ≥ 80 %.  
    c. Mark the task `[x]`, commit, and push.  
 3. Never alter `[x]` or `[@blocked]` items.  
-4. When all tasks of a *Story* are done, ensure its `.feature` file passes and mark the story **Done**.  
-5. Always follow the **Root Agent Tasks** above.  
-6. **Incoming Markdown Plans:**  
+4. When all tasks of a *Story* are done, ensure its `.feature` file passes and mark the story **Done**.
+5. Always follow the **Root Agent Tasks** above.
+6. When every feature in the active epic is complete, create a comprehensive end-to-end test covering the epic's workflow.
+7. **Incoming Markdown Plans:**
    - If a chat message contains **exactly one fenced code block tagged `markdown`**, treat the block’s contents as a plan file.  
    - Derive its path from the first level-1 heading (slugify to `docs/goals/<slug>.md`).
    - Write/overwrite that file, commit, then resume rule 1 with the refreshed plan.

@@ -13,8 +13,8 @@ Status Table (auto-updated)
         - [x] Create `TokenModel.cs` for raw-JSON deserialization.
         - [x] Wire `AuthenticationService` into `TasClient.cs` constructor.
     - [ ] **Story 1.2: Token Refresh Handling (`token-refresh.feature`)**
-        - [ ] Add BDD file `Common.Tests/BDD/token-refresh/token-refresh.feature`.
-        - [ ] Implement `ITokenRefresher.cs` → `RefreshAsync(string refreshToken)`.
+        - [x] Add BDD file `Common.Tests/BDD/token-refresh/token-refresh.feature`.
+        - [x] Implement `ITokenRefresher.cs` → `RefreshAsync(string refreshToken)`.
         - [ ] Integrate automatic refresh into `HttpClientHandler` pipeline.
         - [ ] Unit-test refresh-expiry edge cases in `TokenRefresherTests.cs`.
 
