@@ -28,6 +28,7 @@ public class TasClientIntegrationTests
             new FoundationApi(new HttpClient(new Mock<HttpMessageHandler>().Object), "http://localhost/info"));
         services.AddSingleton<IOrgSpaceApi>(new Mock<IOrgSpaceApi>().Object);
         services.AddSingleton<IAppApi>(new Mock<IAppApi>().Object);
+        services.AddSingleton<IProcessApi>(new Mock<IProcessApi>().Object);
         services.AddSingleton<ITasClient, TasClient>();
         var provider = services.BuildServiceProvider();
         var client = provider.GetRequiredService<ITasClient>();
@@ -107,6 +108,7 @@ public class TasClientIntegrationTests
         services.AddSingleton<IFoundationApi>(_ => new FoundationApi(new HttpClient(apiHandler.Object), "http://localhost/info"));
         services.AddSingleton<IOrgSpaceApi>(new Mock<IOrgSpaceApi>().Object);
         services.AddSingleton<IAppApi>(new Mock<IAppApi>().Object);
+        services.AddSingleton<IProcessApi>(new Mock<IProcessApi>().Object);
         services.AddSingleton<ITasClient, TasClient>();
         var provider = services.BuildServiceProvider();
         var client = provider.GetRequiredService<ITasClient>();
@@ -134,6 +136,7 @@ public class TasClientIntegrationTests
         services.AddSingleton<IFoundationApi>(new Mock<IFoundationApi>().Object);
         services.AddSingleton<IOrgSpaceApi>(_ => new OrgSpaceApi(new HttpClient(handler.Object), "http://localhost"));
         services.AddSingleton<IAppApi>(new Mock<IAppApi>().Object);
+        services.AddSingleton<IProcessApi>(new Mock<IProcessApi>().Object);
         services.AddSingleton<ITasClient, TasClient>();
         var provider = services.BuildServiceProvider();
         var client = provider.GetRequiredService<ITasClient>();

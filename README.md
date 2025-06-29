@@ -3,7 +3,7 @@
 This repository contains a basic .NET solution with a library, an example application and unit tests. The library now includes a HTTP message handler that automatically refreshes expired bearer tokens.
 It also supports initializing a `TasClient` using `TasClientBuilder` and registering it in dependency injection.
 The client can now retrieve foundation information through `FoundationApi`.
-It also supports authentication, token refresh and retrieving org and space data.
+It also supports authentication, token refresh and retrieving org, space, app and process data.
 
 ## Projects
 - **Common** - reusable library code.

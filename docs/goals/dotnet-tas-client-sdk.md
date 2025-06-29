@@ -44,11 +44,11 @@ Status Table (auto-updated)
         - [x] Implement `AppApi.cs` → `GetAppsAsync(spaceId)` (raw JSON).
         - [x] Expose `TasClient.GetAppsAsync(spaceId)`.
         - [x] Add integration test `AppApiIntegrationTests.cs` for 200/404.
-    - [ ] **Story 4.2: Retrieve Process Info (`process-info.feature`)**
-        - [ ] Add BDD file `Common.Tests/BDD/process-info/process-info.feature`.
-        - [ ] Implement `ProcessApi.cs` → `GetProcessesAsync(appId)`.
-        - [ ] Expose `TasClient.GetProcessesAsync(appId)`.
-        - [ ] Validate token refresh on long-running calls in `ProcessApiTests.cs`.
+    - [x] **Story 4.2: Retrieve Process Info (`process-info.feature`)**
+        - [x] Add BDD file `Common.Tests/BDD/process-info/process-info.feature`.
+        - [x] Implement `ProcessApi.cs` → `GetProcessesAsync(appId)`.
+        - [x] Expose `TasClient.GetProcessesAsync(appId)`.
+        - [x] Validate token refresh on long-running calls in `ProcessApiTests.cs`.
 
 References  
 - Cloud Foundry v3 API Reference – all resources (apps, processes, orgs, spaces)  <https://v3-apidocs.cloudfoundry.org/>  
