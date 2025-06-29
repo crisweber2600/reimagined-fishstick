@@ -31,16 +31,17 @@
 Codex **must** execute the full suite (incl. coverage) before proposing a commit.
 
 ## Autonomous-Agent Rules
-1. Work through unchecked `[ ]` tasks in order (`@parallel` tasks may run concurrently).  
-2. For each task  
+1. Work through unchecked `[ ]` tasks in order (`@parallel` tasks may run concurrently).
+2. Focus each run on a single story. Reference the active plan in `docs/goals/*.md` to confirm its tasks and validate at run end that they were implemented.
+3. For each task
    a. Draft a design (class / API sketch) and request human approval.  
    b. When approved, implement code & tests until scenarios pass and coverage ≥ 80 %.  
    c. Mark the task `[x]`, commit, and push.  
-3. Never alter `[x]` or `[@blocked]` items.  
-4. When all tasks of a *Story* are done, ensure its `.feature` file passes and mark the story **Done**.
-5. Always follow the **Root Agent Tasks** above.
-6. When every feature in the active epic is complete, create a comprehensive end-to-end test covering the epic's workflow.
-7. **Incoming Markdown Plans:**
+4. Never alter `[x]` or `[@blocked]` items.
+5. When all tasks of a *Story* are done, ensure its `.feature` file passes and mark the story **Done**.
+6. Always follow the **Root Agent Tasks** above.
+7. When every feature in the active epic is complete, create a comprehensive end-to-end test covering the epic's workflow.
+8. **Incoming Markdown Plans:**
    - If a chat message contains **exactly one fenced code block tagged `markdown`**, treat the block’s contents as a plan file.  
    - Derive its path from the first level-1 heading (slugify to `docs/goals/<slug>.md`).
    - Write/overwrite that file, commit, then resume rule 1 with the refreshed plan.
@@ -51,6 +52,8 @@ Codex **must** execute the full suite (incl. coverage) before proposing a commit
      the following PR has a clear entry point.
    - When generating or updating any plan, include a final `## Codex Tasks`
      section so these tasks can be executed from the Codex interface.
+
+9. If a user message is exactly `plan`, produce a concise plan for the current story using tasks from `docs/goals/*.md`. Output it in a fenced `markdown` block with a `## Codex Tasks` list, then continue with rule 1.
 
 ## Project Plan Lookup
 Find the active epic’s plan under `docs/goals/*.md` and follow its Feature → Story → Task hierarchy.
