@@ -8,10 +8,10 @@ Status Table (auto-updated)
 
 - [ ] **Feature 1: Authentication & Token Management**
     - [ ] **Story 1.1: Auth Token Acquisition (`auth-token-acquisition.feature`)**
-        - [ ] Add BDD file `Common.Tests/BDD/auth-token-acquisition/auth-token-acquisition.feature`.
-        - [ ] Implement `AuthenticationService.cs` → `GetBearerTokenAsync(string username, string password)`.
-        - [ ] Create `TokenModel.cs` for raw-JSON deserialization.
-        - [ ] Wire `AuthenticationService` into `TasClient.cs` constructor.
+        - [x] Add BDD file `Common.Tests/BDD/auth-token-acquisition/auth-token-acquisition.feature`.
+        - [x] Implement `AuthenticationService.cs` → `GetBearerTokenAsync(string username, string password)`.
+        - [x] Create `TokenModel.cs` for raw-JSON deserialization.
+        - [x] Wire `AuthenticationService` into `TasClient.cs` constructor.
     - [ ] **Story 1.2: Token Refresh Handling (`token-refresh.feature`)**
         - [ ] Add BDD file `Common.Tests/BDD/token-refresh/token-refresh.feature`.
         - [ ] Implement `ITokenRefresher.cs` → `RefreshAsync(string refreshToken)`.
