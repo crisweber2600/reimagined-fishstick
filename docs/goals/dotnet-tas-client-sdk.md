@@ -17,13 +17,15 @@ Status Table (auto-updated)
         - [x] Implement `ITokenRefresher.cs` → `RefreshAsync(string refreshToken)`.
         - [x] Integrate automatic refresh into `HttpClientHandler` pipeline.
         - [x] Unit-test refresh-expiry edge cases in `TokenRefresherTests.cs`.
+    - [ ] Implement Authentication & Token Management
 
 - [ ] **Feature 2: Client Initialization & Configuration**
     - [ ] **Story 2.1: Initialize Client (`client-initialization.feature`)**
         - [x] Add BDD file `Common.Tests/BDD/client-initialization/client-initialization.feature`.
-        - [ ] Implement `TasClientOptions.cs` (foundation URI, username, password).
-        - [ ] Build `TasClientBuilder.cs` fluent builder for options validation.
-        - [ ] Register `TasClient` + dependencies in DI (`ServiceCollectionExtensions.cs`).
+        - [x] Implement `TasClientOptions.cs` (foundation URI, username, password).
+        - [x] Build `TasClientBuilder.cs` fluent builder for options validation.
+        - [x] Register `TasClient` + dependencies in DI (`ServiceCollectionExtensions.cs`).
+    - [ ] Implement Client Initialization & Configuration
 
 - [ ] **Feature 3: Foundation / Org / Space Retrieval**
     - [ ] **Story 3.1: Retrieve Foundation Info (`foundation-info.feature`)**
@@ -61,4 +63,9 @@ References
 
 ## Codex Tasks
 - [x] Add BDD file `Common.Tests/BDD/client-initialization/client-initialization.feature`
+- [x] Implement `TasClientOptions.cs` (foundation URI, username, password)
+- [x] Build `TasClientBuilder.cs` fluent builder for options validation
+- [x] Register `TasClient` + dependencies in DI (`ServiceCollectionExtensions.cs`)
+- [ ] Add BDD file `Common.Tests/BDD/foundation-info/foundation-info.feature`
+- [ ] Ensure next step is clear for Codex
 - [ ] Start next task after merge
