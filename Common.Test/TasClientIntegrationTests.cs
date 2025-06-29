@@ -26,6 +26,7 @@ public class TasClientIntegrationTests
             new AuthenticationService(new HttpClient(authHandler.Object), "http://localhost/token"));
         services.AddSingleton<IFoundationApi>(_ =>
             new FoundationApi(new HttpClient(new Mock<HttpMessageHandler>().Object), "http://localhost/info"));
+        services.AddSingleton<IOrgSpaceApi>(new Mock<IOrgSpaceApi>().Object);
         services.AddSingleton<ITasClient, TasClient>();
         var provider = services.BuildServiceProvider();
         var client = provider.GetRequiredService<ITasClient>();
@@ -57,10 +58,12 @@ public class TasClientIntegrationTests
         var client = provider.GetRequiredService<ITasClient>();
         var options = provider.GetRequiredService<TasClientOptions>();
         var api = provider.GetRequiredService<IFoundationApi>();
+        var orgApi = provider.GetRequiredService<IOrgSpaceApi>();
 
         Assert.NotNull(client);
         Assert.Equal("https://api.tas/", options.FoundationUri.ToString());
         Assert.NotNull(api);
+        Assert.NotNull(orgApi);
     }
 
     [Fact]
@@ -99,6 +102,7 @@ public class TasClientIntegrationTests
         var services = new ServiceCollection();
         services.AddSingleton<IAuthenticationService>(new Mock<IAuthenticationService>().Object);
         services.AddSingleton<IFoundationApi>(_ => new FoundationApi(new HttpClient(apiHandler.Object), "http://localhost/info"));
+        services.AddSingleton<IOrgSpaceApi>(new Mock<IOrgSpaceApi>().Object);
         services.AddSingleton<ITasClient, TasClient>();
         var provider = services.BuildServiceProvider();
         var client = provider.GetRequiredService<ITasClient>();
@@ -106,6 +110,34 @@ public class TasClientIntegrationTests
         var json = await client.GetFoundationAsync();
 
         Assert.Equal("{\"name\":\"tas\"}", json);
+    }
+
+    [Fact]
+    public async Task GetOrgsAndSpaces_UseOrgSpaceApi()
+    {
+        var handler = new Mock<HttpMessageHandler>();
+        handler.Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            .ReturnsAsync((HttpRequestMessage req, CancellationToken _) =>
+            {
+                var content = req.RequestUri!.AbsolutePath.Contains("spaces")
+                    ? "{\"spaces\":\"s\"}" : "{\"orgs\":\"o\"}";
+                return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(content) };
+            });
+
+        var services = new ServiceCollection();
+        services.AddSingleton<IAuthenticationService>(new Mock<IAuthenticationService>().Object);
+        services.AddSingleton<IFoundationApi>(new Mock<IFoundationApi>().Object);
+        services.AddSingleton<IOrgSpaceApi>(_ => new OrgSpaceApi(new HttpClient(handler.Object), "http://localhost"));
+        services.AddSingleton<ITasClient, TasClient>();
+        var provider = services.BuildServiceProvider();
+        var client = provider.GetRequiredService<ITasClient>();
+
+        var orgs = await client.GetOrgsAsync();
+        var spaces = await client.GetSpacesAsync("org1");
+
+        Assert.Equal("{\"orgs\":\"o\"}", orgs);
+        Assert.Equal("{\"spaces\":\"s\"}", spaces);
     }
 
     [Fact]
