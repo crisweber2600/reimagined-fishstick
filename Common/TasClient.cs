@@ -5,12 +5,14 @@ public class TasClient : ITasClient
     private readonly IAuthenticationService _authService;
     private readonly IFoundationApi _foundationApi;
     private readonly IOrgSpaceApi _orgSpaceApi;
+    private readonly IAppApi _appApi;
 
-    public TasClient(IAuthenticationService authService, IFoundationApi foundationApi, IOrgSpaceApi orgSpaceApi)
+    public TasClient(IAuthenticationService authService, IFoundationApi foundationApi, IOrgSpaceApi orgSpaceApi, IAppApi appApi)
     {
         _authService = authService;
         _foundationApi = foundationApi;
         _orgSpaceApi = orgSpaceApi;
+        _appApi = appApi;
     }
 
     /// TASK: Authenticate via AuthenticationService
@@ -28,4 +30,8 @@ public class TasClient : ITasClient
     /// TASK: Delegate to OrgSpaceApi for spaces
     public Task<string> GetSpacesAsync(string orgId)
         => _orgSpaceApi.GetSpacesForOrgAsync(orgId);
+
+    /// TASK: Delegate to AppApi for apps
+    public Task<string> GetAppsAsync(string spaceId)
+        => _appApi.GetAppsAsync(spaceId);
 }

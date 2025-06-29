@@ -12,4 +12,7 @@ public interface ITasClient
 
     /// TASK: Retrieve spaces for a specific org as raw JSON
     Task<string> GetSpacesAsync(string orgId);
+
+    /// TASK: Retrieve apps for a specific space as raw JSON
+    Task<string> GetAppsAsync(string spaceId);
 }

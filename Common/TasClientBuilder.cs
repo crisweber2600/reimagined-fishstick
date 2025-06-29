@@ -10,6 +10,7 @@ public class TasClientBuilder
     public IAuthenticationService? AuthenticationService { get; private set; }
     public IFoundationApi? FoundationApi { get; private set; }
     public IOrgSpaceApi? OrgSpaceApi { get; private set; }
+    public IAppApi? AppApi { get; private set; }
 
     public TasClientBuilder WithFoundationUri(string uri)
     {
@@ -31,6 +32,7 @@ public class TasClientBuilder
         AuthenticationService = new AuthenticationService(new HttpClient(), $"{_options.FoundationUri}/oauth/token");
         FoundationApi = new FoundationApi(new HttpClient(), $"{_options.FoundationUri}/v3/info");
         OrgSpaceApi = new OrgSpaceApi(new HttpClient(), _options.FoundationUri.ToString());
-        return new TasClient(AuthenticationService, FoundationApi, OrgSpaceApi);
+        AppApi = new AppApi(new HttpClient(), _options.FoundationUri.ToString());
+        return new TasClient(AuthenticationService, FoundationApi, OrgSpaceApi, AppApi);
     }
 }

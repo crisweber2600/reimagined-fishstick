@@ -15,6 +15,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton(builder.AuthenticationService!);
         services.AddSingleton(builder.FoundationApi!);
         services.AddSingleton(builder.OrgSpaceApi!);
+        services.AddSingleton(builder.AppApi!);
         services.AddSingleton<ITasClient>(client);
         return services;
     }
