@@ -28,10 +28,10 @@ Status Table (auto-updated)
     - [ ] Implement Client Initialization & Configuration
 
 - [ ] **Feature 3: Foundation / Org / Space Retrieval**
-    - [ ] **Story 3.1: Retrieve Foundation Info (`foundation-info.feature`)**
-        - [ ] Add BDD file `Common.Tests/BDD/foundation-info/foundation-info.feature`.
-        - [ ] Implement `FoundationApi.cs` → `GetFoundationAsync()` (raw JSON).
-        - [ ] Expose `TasClient.GetFoundationAsync()`.
+    - [x] **Story 3.1: Retrieve Foundation Info (`foundation-info.feature`)**
+        - [x] Add BDD file `Common.Tests/BDD/foundation-info/foundation-info.feature`.
+        - [x] Implement `FoundationApi.cs` → `GetFoundationAsync()` (raw JSON).
+        - [x] Expose `TasClient.GetFoundationAsync()`.
     - [ ] **Story 3.2: Retrieve Org & Space Info (`org-space-info.feature`)**
         - [ ] Add BDD file `Common.Tests/BDD/org-space-info/org-space-info.feature`.
         - [ ] Implement `OrgSpaceApi.cs` → `GetAllOrgsAsync()` and `GetSpacesForOrgAsync(orgId)`.
@@ -66,6 +66,6 @@ References
 - [x] Implement `TasClientOptions.cs` (foundation URI, username, password)
 - [x] Build `TasClientBuilder.cs` fluent builder for options validation
 - [x] Register `TasClient` + dependencies in DI (`ServiceCollectionExtensions.cs`)
-- [ ] Add BDD file `Common.Tests/BDD/foundation-info/foundation-info.feature`
+- [x] Add BDD file `Common.Tests/BDD/foundation-info/foundation-info.feature`
 - [ ] Ensure next step is clear for Codex
 - [ ] Start next task after merge

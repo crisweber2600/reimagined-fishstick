@@ -24,6 +24,8 @@ public class TasClientIntegrationTests
         var services = new ServiceCollection();
         services.AddSingleton<IAuthenticationService>(_ =>
             new AuthenticationService(new HttpClient(authHandler.Object), "http://localhost/token"));
+        services.AddSingleton<IFoundationApi>(_ =>
+            new FoundationApi(new HttpClient(new Mock<HttpMessageHandler>().Object), "http://localhost/info"));
         services.AddSingleton<ITasClient, TasClient>();
         var provider = services.BuildServiceProvider();
         var client = provider.GetRequiredService<ITasClient>();
@@ -54,9 +56,11 @@ public class TasClientIntegrationTests
 
         var client = provider.GetRequiredService<ITasClient>();
         var options = provider.GetRequiredService<TasClientOptions>();
+        var api = provider.GetRequiredService<IFoundationApi>();
 
         Assert.NotNull(client);
         Assert.Equal("https://api.tas/", options.FoundationUri.ToString());
+        Assert.NotNull(api);
     }
 
     [Fact]
@@ -79,6 +83,29 @@ public class TasClientIntegrationTests
 
         Assert.Equal(HttpStatusCode.OK, resp.StatusCode);
         refresher.Verify(r => r.RefreshAsync("r1"), Times.Once);
+    }
+
+    [Fact]
+    public async Task GetFoundationAsync_UsesFoundationApi()
+    {
+        var apiHandler = new Mock<HttpMessageHandler>();
+        apiHandler.Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{\"name\":\"tas\"}")
+            });
+
+        var services = new ServiceCollection();
+        services.AddSingleton<IAuthenticationService>(new Mock<IAuthenticationService>().Object);
+        services.AddSingleton<IFoundationApi>(_ => new FoundationApi(new HttpClient(apiHandler.Object), "http://localhost/info"));
+        services.AddSingleton<ITasClient, TasClient>();
+        var provider = services.BuildServiceProvider();
+        var client = provider.GetRequiredService<ITasClient>();
+
+        var json = await client.GetFoundationAsync();
+
+        Assert.Equal("{\"name\":\"tas\"}", json);
     }
 
     [Fact]
