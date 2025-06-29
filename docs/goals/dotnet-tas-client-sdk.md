@@ -16,7 +16,7 @@ Status Table (auto-updated)
         - [x] Add BDD file `Common.Tests/BDD/token-refresh/token-refresh.feature`.
         - [x] Implement `ITokenRefresher.cs` → `RefreshAsync(string refreshToken)`.
         - [x] Integrate automatic refresh into `HttpClientHandler` pipeline.
-        - [ ] Unit-test refresh-expiry edge cases in `TokenRefresherTests.cs`.
+        - [x] Unit-test refresh-expiry edge cases in `TokenRefresherTests.cs`.
 
 - [ ] **Feature 2: Client Initialization & Configuration**
     - [ ] **Story 2.1: Initialize Client (`client-initialization.feature`)**
@@ -58,3 +58,7 @@ References
 - Authentication & enterprise SSO in TAS for VMs  <https://techdocs.broadcom.com/us/en/vmware-tanzu/platform/tanzu-platform-for-cloud-foundry/4-0/tpcf/auth-sso.html>  
 - What’s new in .NET 9 – SDK & runtime overview  <https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-9/overview>  
 - Official .NET 9 download page  <https://dotnet.microsoft.com/en-us/download/dotnet/9.0>
+
+## Codex Tasks
+- [ ] Add BDD file `Common.Tests/BDD/client-initialization/client-initialization.feature`
+- [ ] Start next task after merge
