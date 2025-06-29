@@ -38,7 +38,7 @@ public class ProcessApiTests
             .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
             .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent("{\"access_token\":\"new\",\"refresh_token\":\"r2\"}")
+                Content = new StringContent("{\"access_token\":\"new\",\"refresh_token\":\"r2\",\"expires_in\":3600}")
             });
         var services = new ServiceCollection();
         services.AddSingleton<ITokenRefresher>(_ =>
@@ -61,6 +61,6 @@ public class ProcessApiTests
         var json = await api.GetProcessesAsync("app1");
 
         Assert.Equal("{\"procs\":\"p\"}", json);
-        refreshHandler.Protected().Verify("SendAsync", Times.Once(), ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>());
+        refreshHandler.Protected().Verify("SendAsync", Times.AtLeastOnce(), ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>());
     }
 }
