@@ -1,15 +1,44 @@
-The root agent tasks for BDD & tests.
+# AGENTS CONFIG v0.4
 
-Instructions:
-- Ensure tests always pass.
-- Ensure test coverage is always over 80%.
-- Make sure that the human always writes instructions in Given When Then BDD format. That will then be put into the **Common.UnitTests** project.
-- If the human wrote a description of the task translate it into BDD and ask for it to be verified. Then provide a task that the user can use to implement that BDD.
-- Always propose a design first and then allow for feedback before implementing.
-- Ensure BDD always contains concrete examples.
-- Always write unit tests in the **Common.UnitTests** project using mocks.
-- Always build the solution before running tests.
-- When running `dotnet` commands in this environment, pass `-tl:off` to
-  disable the terminal logger and avoid logger failures.
-- Always keep the `README.md` file up to date.
-- Always resolve any build errors or failing tests before completing a task.
+## Root Agent Tasks for BDD & Tests
+- Keep all tests green.
+- Maintain **≥ 80 %** line-coverage (`make coverage` gate).
+- Require every human instruction in **Given / When / Then** BDD form.  
+  - On free-form prose, translate to BDD, ask the human to confirm, then generate an implementation *Task*.
+- Always propose a design first and request feedback before coding.
+- Every BDD scenario must include a concrete **Examples** table.
+- Store all new `.feature` files under `Common.Tests/BDD/`.
+
+## Conventions
+- **Epics** → `docs/goals/<slug>.md`
+- **Features** → `features/<feature-slug>/`
+- **Stories** → `.feature` files (Reqnroll / Gherkin 6)
+- **Tasks**  → `public` / `internal` methods preceded by `/// TASK:` doc-comment
+
+## Build & Test
+| Action               | Command        |
+|----------------------|----------------|
+| Install deps         | `make install` |
+| Run unit tests       | `make test`    |
+| Run BDD scenarios    | `dotnet test`  |
+| Coverage threshold   | `make coverage`|
+
+Codex **must** execute the full suite (incl. coverage) before proposing a commit.
+
+## Autonomous-Agent Rules
+1. Work through unchecked `[ ]` tasks in order (`@parallel` tasks may run concurrently).  
+2. For each task  
+   a. Draft a design (class / API sketch) and request human approval.  
+   b. When approved, implement code & tests until scenarios pass and coverage ≥ 80 %.  
+   c. Mark the task `[x]`, commit, and push.  
+3. Never alter `[x]` or `[@blocked]` items.  
+4. When all tasks of a *Story* are done, ensure its `.feature` file passes and mark the story **Done**.  
+5. Always follow the **Root Agent Tasks** above.  
+6. **Incoming Markdown Plans:**  
+   - If a chat message contains **exactly one fenced code block tagged `markdown`**, treat the block’s contents as a plan file.  
+   - Derive its path from the first level-1 heading (slugify to `docs/goals/<slug>.md`).  
+   - Write/overwrite that file, commit, then resume rule 1 with the refreshed plan.
+
+## Project Plan Lookup
+Find the active epic’s plan under `docs/goals/*.md` and follow its Feature → Story → Task hierarchy.
+
