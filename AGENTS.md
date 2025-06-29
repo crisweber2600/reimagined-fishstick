@@ -9,5 +9,7 @@ Instructions:
 - Ensure BDD always contains concrete examples.
 - Always write unit tests in the **Common.UnitTests** project using mocks.
 - Always build the solution before running tests.
+- When running `dotnet` commands in this environment, pass `-tl:off` to
+  disable the terminal logger and avoid logger failures.
 - Always keep the `README.md` file up to date.
 - Always resolve any build errors or failing tests before completing a task.
