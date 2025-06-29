@@ -2,7 +2,7 @@
 
 ## Root Agent Tasks for BDD & Tests
 - Keep all tests green.
-- Maintain **≥ 80 %** line-coverage (`make coverage` gate).
+- Maintain **≥ 80 %** line-coverage (`dotnet test /p:CollectCoverage=true` gate).
 - Require every human instruction in **Given / When / Then** BDD form.  
   - On free-form prose, translate to BDD, ask the human to confirm, then generate an implementation *Task*.
 - Always propose a design first and request feedback before coding.
@@ -18,10 +18,10 @@
 ## Build & Test
 | Action               | Command        |
 |----------------------|----------------|
-| Install deps         | `make install` |
-| Run unit tests       | `make test`    |
+| Install deps         | `dotnet restore` |
+| Run unit tests       | `dotnet test --no-build` |
 | Run BDD scenarios    | `dotnet test`  |
-| Coverage threshold   | `make coverage`|
+| Coverage threshold   | `dotnet test /p:CollectCoverage=true` |
 
 Codex **must** execute the full suite (incl. coverage) before proposing a commit.
 
@@ -36,8 +36,14 @@ Codex **must** execute the full suite (incl. coverage) before proposing a commit
 5. Always follow the **Root Agent Tasks** above.  
 6. **Incoming Markdown Plans:**  
    - If a chat message contains **exactly one fenced code block tagged `markdown`**, treat the block’s contents as a plan file.  
-   - Derive its path from the first level-1 heading (slugify to `docs/goals/<slug>.md`).  
+   - Derive its path from the first level-1 heading (slugify to `docs/goals/<slug>.md`).
    - Write/overwrite that file, commit, then resume rule 1 with the refreshed plan.
+   - **Verify the plan lists at least one unchecked `[ ]` task for each feature.**
+     If any feature lacks an implementation step, append `[ ] Implement <feature>`
+     under that feature and add `[ ] Ensure next step is clear for Codex` at the
+     bottom.
+   - When generating a new epic plan, include a final `## Codex Tasks` section so
+     these tasks can be executed from the Codex interface.
 
 ## Project Plan Lookup
 Find the active epic’s plan under `docs/goals/*.md` and follow its Feature → Story → Task hierarchy.
