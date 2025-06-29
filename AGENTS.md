@@ -2,12 +2,13 @@
 
 ## Root Agent Tasks for BDD & Tests
 - Keep all tests green.
-- Maintain **≥ 80 %** line-coverage (`dotnet test /p:CollectCoverage=true` gate).
+- Maintain **≥ 80 %** line-coverage for *each test project* (`dotnet test <project> /p:CollectCoverage=true` gate).
 - Require every human instruction in **Given / When / Then** BDD form.  
   - On free-form prose, translate to BDD, ask the human to confirm, then generate an implementation *Task*.
 - Always propose a design first and request feedback before coding.
 - Every BDD scenario must include a concrete **Examples** table.
 - Store all new `.feature` files under `Common.Tests/BDD/`.
+- Create a matching step definition `.cs` file in the same folder whenever adding a `.feature` file.
 - Keep `README.md` updated with build instructions and feature summaries.
 - Write all library code as **clients** or **services** backed by interfaces.
 - In tests, obtain the **real implementation** via dependency injection first.
@@ -26,7 +27,7 @@
 | Install deps         | `dotnet restore` |
 | Run unit tests       | `dotnet test --no-build` |
 | Run BDD scenarios    | `dotnet test`  |
-| Coverage threshold   | `dotnet test /p:CollectCoverage=true` |
+| Coverage threshold   | `dotnet test <project> /p:CollectCoverage=true` |
 
 Codex **must** execute the full suite (incl. coverage) before proposing a commit.
 
@@ -35,7 +36,7 @@ Codex **must** execute the full suite (incl. coverage) before proposing a commit
 2. Focus each run on a single story. Reference the active plan in `docs/goals/*.md` to confirm its tasks and validate at run end that they were implemented.
 3. For each task
    a. Draft a design (class / API sketch) and request human approval.  
-   b. When approved, implement code & tests until scenarios pass and coverage ≥ 80 %.  
+   b. When approved, implement code & tests until scenarios pass and coverage ≥ 80 % for each test project.
    c. Mark the task `[x]`, commit, and push.  
 4. Never alter `[x]` or `[@blocked]` items.
 5. When all tasks of a *Story* are done, ensure its `.feature` file passes and mark the story **Done**.
