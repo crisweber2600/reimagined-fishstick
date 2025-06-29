@@ -43,9 +43,10 @@ Codex **must** execute the full suite (incl. coverage) before proposing a commit
    - **Verify the plan lists at least one unchecked `[ ]` task for each feature.**
      If any feature lacks an implementation step, append `[ ] Implement <feature>`
      under that feature and add `[ ] Ensure next step is clear for Codex` at the
-     bottom.
-   - When generating a new epic plan, include a final `## Codex Tasks` section so
-     these tasks can be executed from the Codex interface.
+     bottom. Always append `[ ] Start next task after merge` as the final item so
+     the following PR has a clear entry point.
+   - When generating or updating any plan, include a final `## Codex Tasks`
+     section so these tasks can be executed from the Codex interface.
 
 ## Project Plan Lookup
 Find the active epic’s plan under `docs/goals/*.md` and follow its Feature → Story → Task hierarchy.
