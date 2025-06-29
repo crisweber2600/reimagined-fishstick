@@ -20,7 +20,7 @@ Status Table (auto-updated)
 
 - [ ] **Feature 2: Client Initialization & Configuration**
     - [ ] **Story 2.1: Initialize Client (`client-initialization.feature`)**
-        - [ ] Add BDD file `Common.Tests/BDD/client-initialization/client-initialization.feature`.
+        - [x] Add BDD file `Common.Tests/BDD/client-initialization/client-initialization.feature`.
         - [ ] Implement `TasClientOptions.cs` (foundation URI, username, password).
         - [ ] Build `TasClientBuilder.cs` fluent builder for options validation.
         - [ ] Register `TasClient` + dependencies in DI (`ServiceCollectionExtensions.cs`).
@@ -60,5 +60,5 @@ References
 - Official .NET 9 download page  <https://dotnet.microsoft.com/en-us/download/dotnet/9.0>
 
 ## Codex Tasks
-- [ ] Add BDD file `Common.Tests/BDD/client-initialization/client-initialization.feature`
+- [x] Add BDD file `Common.Tests/BDD/client-initialization/client-initialization.feature`
 - [ ] Start next task after merge
