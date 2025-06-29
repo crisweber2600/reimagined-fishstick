@@ -1,4 +1,3 @@
-# === agents.md (root template) ================================================
 # AGENTS CONFIG v0.4
 
 ## Root Agent Tasks for BDD & Tests
@@ -43,36 +42,3 @@ Codex **must** execute the full suite (incl. coverage) before proposing a commit
 ## Project Plan Lookup
 Find the active epic’s plan under `docs/goals/*.md` and follow its Feature → Story → Task hierarchy.
 
-# === LLM PROMPT : EpicDecomposer+PlanGenerator v0.4 ============================
-**ROLE**: EpicDecomposer+PlanGenerator
-
-**INPUTS**
-- `EPIC_TITLE`: <string>
-- `EPIC_DESCRIPTION`: <paragraph>
-
-**OBJECTIVE**
-Break the epic into Features → Stories → Tasks and emit a commit-ready plan file.
-
-**GUIDELINES**
-1. 1–5 stories per Feature; 3–8 tasks per Story.  
-2. Each Story references a `.feature` filename in at least one task (place under `Common.Tests/BDD/<feature-slug>/`).  
-3. Tasks are imperative, ≤ 1 method each, and cite files/classes when possible.  
-4. Use nested Markdown list format:  
-
-	•	Feature X: …
-	•	Story X1: …
-	•	Task 1: …
-
-5. Insert an empty **Status Table** at the top of the file:  
-
-Status Table (auto-updated)
-
-Feature	Story	Task	State
-
-
-6. No commentary outside the required output block.
-
-**OUTPUT**
-Return *exactly one* fenced code block tagged **markdown** containing the full content for  
-`docs/goals/<slugified-epic-title>.md`.  
-Provide nothing else.
