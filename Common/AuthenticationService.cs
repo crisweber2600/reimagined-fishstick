@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Common;
 
-public class AuthenticationService
+public class AuthenticationService : IAuthenticationService
 {
     private readonly HttpClient _client;
     private readonly string _authEndpoint;

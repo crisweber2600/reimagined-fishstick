@@ -1,10 +1,10 @@
 namespace Common;
 
-public class TasClient
+public class TasClient : ITasClient
 {
-    private readonly AuthenticationService _authService;
+    private readonly IAuthenticationService _authService;
 
-    public TasClient(AuthenticationService authService)
+    public TasClient(IAuthenticationService authService)
     {
         _authService = authService;
     }

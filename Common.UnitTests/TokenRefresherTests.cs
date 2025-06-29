@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using Moq.Protected;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.UnitTests;
 
@@ -19,8 +20,11 @@ public class TokenRefresherTests
             {
                 Content = new StringContent("{\"access_token\":\"newabc\",\"refresh_token\":\"newxyz\"}")
             });
-        var client = new HttpClient(handler.Object);
-        var refresher = new TokenRefresher(client, "http://localhost/refresh");
+        var services = new ServiceCollection();
+        services.AddSingleton<ITokenRefresher>(_ =>
+            new TokenRefresher(new HttpClient(handler.Object), "http://localhost/refresh"));
+        var provider = services.BuildServiceProvider();
+        var refresher = provider.GetRequiredService<ITokenRefresher>();
 
         var token = await refresher.RefreshAsync("oldrefresh");
 

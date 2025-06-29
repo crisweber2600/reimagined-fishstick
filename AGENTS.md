@@ -9,6 +9,10 @@
 - Every BDD scenario must include a concrete **Examples** table.
 - Store all new `.feature` files under `Common.Tests/BDD/`.
 - Keep `README.md` updated with build instructions and feature summaries.
+- Write all library code as **clients** or **services** backed by interfaces.
+- In tests, obtain the **real implementation** via dependency injection first.
+  - Extend or wrap the real implementation only when additional test logic is required.
+  - Apply this rule consistently across *all* test projects.
 
 ## Conventions
 - **Epics** → `docs/goals/<slug>.md`
