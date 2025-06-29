@@ -15,7 +15,7 @@ Status Table (auto-updated)
     - [ ] **Story 1.2: Token Refresh Handling (`token-refresh.feature`)**
         - [x] Add BDD file `Common.Tests/BDD/token-refresh/token-refresh.feature`.
         - [x] Implement `ITokenRefresher.cs` → `RefreshAsync(string refreshToken)`.
-        - [ ] Integrate automatic refresh into `HttpClientHandler` pipeline.
+        - [x] Integrate automatic refresh into `HttpClientHandler` pipeline.
         - [ ] Unit-test refresh-expiry edge cases in `TokenRefresherTests.cs`.
 
 - [ ] **Feature 2: Client Initialization & Configuration**

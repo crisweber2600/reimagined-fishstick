@@ -1,6 +1,6 @@
 # Common Solution
 
-This repository contains a basic .NET solution with a library, an example application and unit tests.
+This repository contains a basic .NET solution with a library, an example application and unit tests. The library now includes a HTTP message handler that automatically refreshes expired bearer tokens.
 
 ## Projects
 - **Common** - reusable library code.
