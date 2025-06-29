@@ -39,11 +39,11 @@ Status Table (auto-updated)
         - [x] Add resilience policies for 429/5xx in `OrgSpaceApi.cs`.
 
 - [ ] **Feature 4: Application & Process Retrieval**
-    - [ ] **Story 4.1: Retrieve App / Component Info (`app-component-info.feature`)**
-        - [ ] Add BDD file `Common.Tests/BDD/app-component-info/app-component-info.feature`.
-        - [ ] Implement `AppApi.cs` → `GetAppsAsync(spaceId)` (raw JSON).
-        - [ ] Expose `TasClient.GetAppsAsync(spaceId)`.
-        - [ ] Add integration test `AppApiIntegrationTests.cs` for 200/404.
+    - [x] **Story 4.1: Retrieve App / Component Info (`app-component-info.feature`)**
+        - [x] Add BDD file `Common.Tests/BDD/app-component-info/app-component-info.feature`.
+        - [x] Implement `AppApi.cs` → `GetAppsAsync(spaceId)` (raw JSON).
+        - [x] Expose `TasClient.GetAppsAsync(spaceId)`.
+        - [x] Add integration test `AppApiIntegrationTests.cs` for 200/404.
     - [ ] **Story 4.2: Retrieve Process Info (`process-info.feature`)**
         - [ ] Add BDD file `Common.Tests/BDD/process-info/process-info.feature`.
         - [ ] Implement `ProcessApi.cs` → `GetProcessesAsync(appId)`.
@@ -70,5 +70,8 @@ References
 - [x] Add step definitions for auth and token refresh features
 - [x] Add BDD file `Common.Tests/BDD/org-space-info/org-space-info.feature`
 - [x] Implement OrgSpaceApi and TasClient methods
+- [x] Add BDD file `Common.Tests/BDD/app-component-info/app-component-info.feature`
+- [x] Implement AppApi and TasClient method
+- [x] Add integration test `AppApiIntegrationTests.cs`
 - [ ] Ensure next step is clear for Codex
 - [ ] Start next task after merge
