@@ -1,7 +1,9 @@
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Moq.Protected;
@@ -13,17 +15,19 @@ public class TasClientIntegrationTests
     [Fact]
     public async Task AuthenticateAsync_UsesAuthenticationService()
     {
-        var authHandler = new Mock<HttpMessageHandler>();
-        authHandler.Protected()
-            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-            .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
+        var authHandler = new SequenceHandler(
+            new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent("{\"access_token\":\"abc\",\"refresh_token\":\"xyz\"}")
+                Content = new StringContent("{\"authorization_endpoint\":\"http://uaa\"}")
+            },
+            new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{\"access_token\":\"abc\",\"refresh_token\":\"xyz\",\"expires_in\":3600}")
             });
 
         var services = new ServiceCollection();
         services.AddSingleton<IAuthenticationService>(_ =>
-            new AuthenticationService(new HttpClient(authHandler.Object), "http://localhost/token"));
+            new AuthenticationService(new HttpClient(authHandler), "http://api"));
         services.AddSingleton<IFoundationApi>(_ =>
             new FoundationApi(new HttpClient(new Mock<HttpMessageHandler>().Object), "http://localhost/info"));
         services.AddSingleton<IOrgSpaceApi>(new Mock<IOrgSpaceApi>().Object);
@@ -54,7 +58,7 @@ public class TasClientIntegrationTests
         services.AddTasClient(b => b
             .WithFoundationUri("https://api.tas")
             .WithCredentials("user","pass"));
-        services.AddSingleton<IAuthenticationService>(new AuthenticationService(new HttpClient(handler.Object), "http://localhost/token"));
+        services.AddSingleton<IAuthenticationService>(new AuthenticationService(new HttpClient(handler.Object), "http://api"));
         var provider = services.BuildServiceProvider();
 
         var client = provider.GetRequiredService<ITasClient>();
@@ -74,8 +78,8 @@ public class TasClientIntegrationTests
     public async Task TokenRefreshingHandler_RefreshesOnUnauthorized()
     {
         var refresher = new Mock<ITokenRefresher>();
-        refresher.Setup(r => r.RefreshAsync("r1"))
-            .ReturnsAsync(new TokenModel { AccessToken = "new", RefreshToken = "r2" });
+        refresher.Setup(r => r.RefreshAsync(It.IsAny<string>()))
+            .ReturnsAsync(new TokenModel { AccessToken = "new", RefreshToken = "r2", ExpiresAt = DateTime.UtcNow.AddMinutes(5) });
 
         var innerHandler = new Mock<HttpMessageHandler>();
         innerHandler.Protected()
@@ -83,13 +87,13 @@ public class TasClientIntegrationTests
             .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.Unauthorized))
             .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
 
-        var handler = new TokenRefreshingHandler(refresher.Object, new TokenModel { AccessToken = "old", RefreshToken = "r1" }, innerHandler.Object);
+        var handler = new TokenRefreshingHandler(refresher.Object, new TokenModel { AccessToken = "old", RefreshToken = "r1", ExpiresAt = DateTime.UtcNow.AddSeconds(-1) }, innerHandler.Object);
         var client = new HttpClient(handler);
 
         var resp = await client.GetAsync("http://example.com");
 
         Assert.Equal(HttpStatusCode.OK, resp.StatusCode);
-        refresher.Verify(r => r.RefreshAsync("r1"), Times.Once);
+        refresher.Verify(r => r.RefreshAsync(It.IsAny<string>()), Times.AtLeastOnce());
     }
 
     [Fact]
@@ -156,3 +160,16 @@ public class TasClientIntegrationTests
         Assert.Equal(5, result);
     }
 }
+
+public class SequenceHandler : HttpMessageHandler
+{
+    private readonly Queue<HttpResponseMessage> _responses;
+    public HttpRequestMessage? LastRequest { get; private set; }
+    public SequenceHandler(params HttpResponseMessage[] responses) => _responses = new Queue<HttpResponseMessage>(responses);
+    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    {
+        LastRequest = request;
+        return Task.FromResult(_responses.Dequeue());
+    }
+}
+

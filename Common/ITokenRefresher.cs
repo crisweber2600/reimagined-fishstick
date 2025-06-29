@@ -1,7 +1,8 @@
 using System.Net.Http;
-using System.Text;
+using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Common;
 
@@ -24,11 +25,18 @@ public class TokenRefresher : ITokenRefresher
     /// TASK: Refresh token using refresh token
     public async Task<TokenModel> RefreshAsync(string refreshToken)
     {
-        var content = new StringContent($"{{\"refresh_token\":\"{refreshToken}\"}}", Encoding.UTF8, "application/json");
-        var response = await _client.PostAsync(_refreshEndpoint, content);
+        var request = new HttpRequestMessage(HttpMethod.Post, _refreshEndpoint);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Basic", "Y2Y6");
+        request.Content = new FormUrlEncodedContent(new Dictionary<string, string>
+        {
+            ["grant_type"] = "refresh_token",
+            ["refresh_token"] = refreshToken
+        });
+        var response = await _client.SendAsync(request);
         response.EnsureSuccessStatusCode();
         var json = await response.Content.ReadAsStringAsync();
-        var model = JsonSerializer.Deserialize<TokenModel>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-        return model ?? new TokenModel();
+        var model = JsonSerializer.Deserialize<TokenModel>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new TokenModel();
+        model.SetExpiration();
+        return model;
     }
 }

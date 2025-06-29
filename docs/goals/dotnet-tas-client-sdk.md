@@ -73,5 +73,18 @@ References
 - [x] Add BDD file `Common.Tests/BDD/app-component-info/app-component-info.feature`
 - [x] Implement AppApi and TasClient method
 - [x] Add integration test `AppApiIntegrationTests.cs`
+- [ ] Add BDD file `Common.Tests/BDD/token-endpoint-discovery/token-endpoint-discovery.feature`
+- [ ] Implement UAA endpoint discovery and Basic Auth in `AuthenticationService`
+- [ ] Expand `TokenModel` with `token_type` and `expires_in`
+- [ ] Implement thread-safe refresh in `TokenRefreshingHandler`
+- [ ] Unit test token endpoint discovery and refresh logic
+- [ ] Add BDD file `Common.Tests/BDD/foundation-info-pagination/foundation-info-pagination.feature`
+- [ ] Auto-paginate `OrgSpaceApi` results and enhance retry policy
+- [ ] Update `FoundationApi` to return usage summary JSON
+- [ ] Unit test pagination and retry scenarios
+- [ ] Add BDD file `Common.Tests/BDD/app-listing-correct/app-listing-correct.feature`
+- [ ] Update `AppApi.GetAppsAsync` to filter by space GUID
+- [ ] Handle 404 from `GetAppsAsync` gracefully
+- [ ] Verify `ProcessApi.GetProcessesAsync` and add refresh expiry test
 - [ ] Ensure next step is clear for Codex
 - [ ] Start next task after merge
