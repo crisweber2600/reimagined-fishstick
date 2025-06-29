@@ -16,9 +16,11 @@ public class ServiceCollectionExtensionsTests
         var client = provider.GetRequiredService<ITasClient>();
         var auth = provider.GetRequiredService<IAuthenticationService>();
         var api = provider.GetRequiredService<IFoundationApi>();
+        var process = provider.GetRequiredService<IProcessApi>();
 
         Assert.NotNull(client);
         Assert.NotNull(auth);
         Assert.NotNull(api);
+        Assert.NotNull(process);
     }
 }

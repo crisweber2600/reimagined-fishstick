@@ -15,4 +15,7 @@ public interface ITasClient
 
     /// TASK: Retrieve apps for a specific space as raw JSON
     Task<string> GetAppsAsync(string spaceId);
+
+    /// TASK: Retrieve processes for a specific app as raw JSON
+    Task<string> GetProcessesAsync(string appId);
 }
