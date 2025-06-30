@@ -45,4 +45,32 @@ public class AuthenticationService : IAuthenticationService
         model.SetExpiration();
         return model;
     }
+
+    /// TASK: Refresh bearer token using refresh token
+    public async Task<TokenModel> RefreshAsync(string refreshToken)
+    {
+        var infoResp = await _client.GetAsync($"{_foundationUri}/info");
+        infoResp.EnsureSuccessStatusCode();
+        var infoJson = await infoResp.Content.ReadAsStringAsync();
+        using var doc = JsonDocument.Parse(infoJson);
+        var endpoint = doc.RootElement.TryGetProperty("token_endpoint", out var te)
+            ? te.GetString()
+            : doc.RootElement.GetProperty("authorization_endpoint").GetString();
+        var tokenUri = $"{endpoint?.TrimEnd('/')}/oauth/token";
+
+        var request = new HttpRequestMessage(HttpMethod.Post, tokenUri);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Basic", "Y2Y6");
+        request.Content = new FormUrlEncodedContent(new Dictionary<string, string>
+        {
+            ["grant_type"] = "refresh_token",
+            ["refresh_token"] = refreshToken
+        });
+
+        var response = await _client.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        var json = await response.Content.ReadAsStringAsync();
+        var model = JsonSerializer.Deserialize<TokenModel>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new TokenModel();
+        model.SetExpiration();
+        return model;
+    }
 }

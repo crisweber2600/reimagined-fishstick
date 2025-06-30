@@ -73,11 +73,11 @@ References
 - [x] Add BDD file `Common.Tests/BDD/app-component-info/app-component-info.feature`
 - [x] Implement AppApi and TasClient method
 - [x] Add integration test `AppApiIntegrationTests.cs`
-- [ ] Add BDD file `Common.Tests/BDD/token-endpoint-discovery/token-endpoint-discovery.feature`
-- [ ] Implement UAA endpoint discovery and Basic Auth in `AuthenticationService`
-- [ ] Expand `TokenModel` with `token_type` and `expires_in`
-- [ ] Implement thread-safe refresh in `TokenRefreshingHandler`
-- [ ] Unit test token endpoint discovery and refresh logic
+- [x] Add BDD file `Common.Tests/BDD/token-endpoint-discovery/token-endpoint-discovery.feature`
+- [x] Implement UAA endpoint discovery and Basic Auth in `AuthenticationService`
+- [x] Expand `TokenModel` with `token_type` and `expires_in`
+- [x] Implement thread-safe refresh in `TokenRefreshingHandler`
+- [x] Unit test token endpoint discovery and refresh logic
 - [ ] Add BDD file `Common.Tests/BDD/foundation-info-pagination/foundation-info-pagination.feature`
 - [ ] Auto-paginate `OrgSpaceApi` results and enhance retry policy
 - [ ] Update `FoundationApi` to return usage summary JSON
