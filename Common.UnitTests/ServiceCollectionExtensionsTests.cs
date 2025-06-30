@@ -17,10 +17,14 @@ public class ServiceCollectionExtensionsTests
         var auth = provider.GetRequiredService<IAuthenticationService>();
         var api = provider.GetRequiredService<IFoundationApi>();
         var process = provider.GetRequiredService<IProcessApi>();
+        var cache = provider.GetRequiredService<ITokenCache>();
+        var handler = provider.GetRequiredService<BearerTokenHandler>();
 
         Assert.NotNull(client);
         Assert.NotNull(auth);
         Assert.NotNull(api);
         Assert.NotNull(process);
+        Assert.NotNull(cache);
+        Assert.NotNull(handler);
     }
 }

@@ -12,6 +12,9 @@ public class TasClientBuilder
     public IOrgSpaceApi? OrgSpaceApi { get; private set; }
     public IAppApi? AppApi { get; private set; }
     public IProcessApi? ProcessApi { get; private set; }
+    public ITokenCache? TokenCache { get; private set; }
+    public BearerTokenHandler? BearerHandler { get; private set; }
+    public HttpClient? HttpClient { get; private set; }
 
     public TasClientBuilder WithFoundationUri(string uri)
     {
@@ -31,10 +34,13 @@ public class TasClientBuilder
     {
         _options.Validate();
         AuthenticationService = new AuthenticationService(new HttpClient(), $"{_options.FoundationUri}/oauth/token");
-        FoundationApi = new FoundationApi(new HttpClient(), $"{_options.FoundationUri}/v3/info");
-        OrgSpaceApi = new OrgSpaceApi(new HttpClient(), _options.FoundationUri.ToString());
-        AppApi = new AppApi(new HttpClient(), _options.FoundationUri.ToString());
-        ProcessApi = new ProcessApi(new HttpClient(), _options.FoundationUri.ToString());
+        TokenCache = new TokenCache();
+        BearerHandler = new BearerTokenHandler(TokenCache);
+        HttpClient = new HttpClient(BearerHandler);
+        FoundationApi = new FoundationApi(HttpClient, $"{_options.FoundationUri}/v3/info");
+        OrgSpaceApi = new OrgSpaceApi(HttpClient, _options.FoundationUri.ToString());
+        AppApi = new AppApi(HttpClient, _options.FoundationUri.ToString());
+        ProcessApi = new ProcessApi(HttpClient, _options.FoundationUri.ToString());
         return new TasClient(AuthenticationService, FoundationApi, OrgSpaceApi, AppApi, ProcessApi);
     }
 }

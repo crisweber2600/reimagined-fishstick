@@ -12,6 +12,9 @@ public static class ServiceCollectionExtensions
         var client = builder.Build();
 
         services.AddSingleton(builder.Options);
+        services.AddSingleton(builder.TokenCache!);
+        services.AddSingleton(builder.BearerHandler!);
+        services.AddSingleton(builder.HttpClient!);
         services.AddSingleton(builder.AuthenticationService!);
         services.AddSingleton(builder.FoundationApi!);
         services.AddSingleton(builder.OrgSpaceApi!);
