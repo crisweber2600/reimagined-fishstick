@@ -33,14 +33,15 @@ public class TasClientBuilder
     public TasClient Build()
     {
         _options.Validate();
-        AuthenticationService = new AuthenticationService(new HttpClient(), _options.FoundationUri.ToString());
+        var baseUri = _options.FoundationUri.ToString().TrimEnd('/');
+        AuthenticationService = new AuthenticationService(new HttpClient(), baseUri);
         TokenCache = new TokenCache();
         BearerHandler = new BearerTokenHandler(TokenCache, AuthenticationService);
         HttpClient = new HttpClient(BearerHandler);
-        FoundationApi = new FoundationApi(HttpClient, $"{_options.FoundationUri}/v3/info");
-        OrgSpaceApi = new OrgSpaceApi(HttpClient, _options.FoundationUri.ToString());
-        AppApi = new AppApi(HttpClient, _options.FoundationUri.ToString());
-        ProcessApi = new ProcessApi(HttpClient, _options.FoundationUri.ToString());
+        FoundationApi = new FoundationApi(HttpClient, $"{baseUri}/v3/info");
+        OrgSpaceApi = new OrgSpaceApi(HttpClient, baseUri);
+        AppApi = new AppApi(HttpClient, baseUri);
+        ProcessApi = new ProcessApi(HttpClient, baseUri);
         return new TasClient(AuthenticationService, FoundationApi, OrgSpaceApi, AppApi, ProcessApi);
     }
 }

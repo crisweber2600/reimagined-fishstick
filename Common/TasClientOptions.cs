@@ -13,6 +13,8 @@ public class TasClientOptions
     {
         if (FoundationUri == null)
             throw new InvalidOperationException("FoundationUri is required");
+        if (FoundationUri.OriginalString.EndsWith("/"))
+            throw new InvalidOperationException("FoundationUri must not have a trailing slash");
         if (string.IsNullOrWhiteSpace(Username))
             throw new InvalidOperationException("Username is required");
         if (string.IsNullOrWhiteSpace(Password))

@@ -27,7 +27,7 @@ public class AuthenticationService : IAuthenticationService
         var endpoint = doc.RootElement.TryGetProperty("token_endpoint", out var te)
             ? te.GetString()
             : doc.RootElement.GetProperty("authorization_endpoint").GetString();
-        var tokenUri = $"{endpoint?.TrimEnd('/')}/oauth/token";
+        var tokenUri = endpoint?.TrimEnd('/');
 
         var request = new HttpRequestMessage(HttpMethod.Post, tokenUri);
         request.Headers.Authorization = new AuthenticationHeaderValue("Basic", "Y2Y6");
@@ -56,7 +56,7 @@ public class AuthenticationService : IAuthenticationService
         var endpoint = doc.RootElement.TryGetProperty("token_endpoint", out var te)
             ? te.GetString()
             : doc.RootElement.GetProperty("authorization_endpoint").GetString();
-        var tokenUri = $"{endpoint?.TrimEnd('/')}/oauth/token";
+        var tokenUri = endpoint?.TrimEnd('/');
 
         var request = new HttpRequestMessage(HttpMethod.Post, tokenUri);
         request.Headers.Authorization = new AuthenticationHeaderValue("Basic", "Y2Y6");

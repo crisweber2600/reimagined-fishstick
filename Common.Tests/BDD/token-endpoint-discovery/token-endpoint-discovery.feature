@@ -6,7 +6,7 @@ Feature: Token Endpoint Discovery
   Scenario Outline: Discover and use token endpoint
     Given the info endpoint returns <token_url>
     When I authenticate with <username> and <password>
-    Then the token request is sent to <token_url>/oauth/token
+    Then the token request is sent to <token_url>
 
     Examples:
       | username | password | token_url             |
