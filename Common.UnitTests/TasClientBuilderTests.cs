@@ -14,6 +14,12 @@ public class TasClientBuilderTests
         var client = builder.Build();
 
         Assert.NotNull(client);
+        Assert.Equal("https://api.tas", typeof(AuthenticationService)
+            .GetField("_foundationUri", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
+            .GetValue(builder.AuthenticationService));
+        Assert.Equal("https://api.tas/v3/info", typeof(FoundationApi)
+            .GetField("_endpoint", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
+            .GetValue(builder.FoundationApi));
         Assert.Same(builder.HttpClient, typeof(FoundationApi).GetField("_client", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!.GetValue(builder.FoundationApi));
         Assert.Same(builder.HttpClient, typeof(OrgSpaceApi).GetField("_client", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!.GetValue(builder.OrgSpaceApi));
         Assert.Same(builder.HttpClient, typeof(AppApi).GetField("_client", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!.GetValue(builder.AppApi));
@@ -25,6 +31,16 @@ public class TasClientBuilderTests
     {
         var builder = new TasClientBuilder()
             .WithFoundationUri("https://api.tas");
+
+        Assert.Throws<InvalidOperationException>(() => builder.Build());
+    }
+
+    [Fact]
+    public void Build_ThrowsWithTrailingSlashUri()
+    {
+        var builder = new TasClientBuilder()
+            .WithFoundationUri("https://api.tas/")
+            .WithCredentials("u", "p");
 
         Assert.Throws<InvalidOperationException>(() => builder.Build());
     }
