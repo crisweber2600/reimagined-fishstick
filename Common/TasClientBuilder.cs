@@ -33,9 +33,9 @@ public class TasClientBuilder
     public TasClient Build()
     {
         _options.Validate();
-        AuthenticationService = new AuthenticationService(new HttpClient(), $"{_options.FoundationUri}/oauth/token");
+        AuthenticationService = new AuthenticationService(new HttpClient(), _options.FoundationUri.ToString());
         TokenCache = new TokenCache();
-        BearerHandler = new BearerTokenHandler(TokenCache);
+        BearerHandler = new BearerTokenHandler(TokenCache, AuthenticationService);
         HttpClient = new HttpClient(BearerHandler);
         FoundationApi = new FoundationApi(HttpClient, $"{_options.FoundationUri}/v3/info");
         OrgSpaceApi = new OrgSpaceApi(HttpClient, _options.FoundationUri.ToString());
