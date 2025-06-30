@@ -22,7 +22,7 @@ public class OrgSpaceInfoSteps
     public async Task WhenIRequest(string kind)
     {
         if (_api != null)
-            _json = kind == "orgs" ? await _api.GetAllOrgsAsync() : await _api.GetSpacesForOrgAsync("org1");
+            _json = kind == "organizations" ? await _api.GetAllOrgsAsync() : await _api.GetSpacesForOrgAsync("org1");
     }
 
     [Then("I receive {json}")]
