@@ -131,7 +131,7 @@ public class TasClientIntegrationTests
             .ReturnsAsync((HttpRequestMessage req, CancellationToken _) =>
             {
                 var content = req.RequestUri!.AbsolutePath.Contains("spaces")
-                    ? "{\"spaces\":\"s\"}" : "{\"orgs\":\"o\"}";
+                    ? "{\"spaces\":\"s\"}" : "{\"organizations\":\"o\"}";
                 return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(content) };
             });
 
@@ -148,7 +148,7 @@ public class TasClientIntegrationTests
         var orgs = await client.GetOrgsAsync();
         var spaces = await client.GetSpacesAsync("org1");
 
-        Assert.Equal("{\"orgs\":\"o\"}", orgs);
+        Assert.Equal("{\"organizations\":\"o\"}", orgs);
         Assert.Equal("{\"spaces\":\"s\"}", spaces);
     }
 

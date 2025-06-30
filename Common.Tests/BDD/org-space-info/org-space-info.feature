@@ -9,6 +9,6 @@ Feature: Org and Space Info
     Then I receive <json>
 
     Examples:
-      | kind  | json             |
-      | orgs  | {"orgs":"o"}    |
-      | spaces| {"spaces":"s"}  |
+      | kind          | json                    |
+      | organizations | {"organizations":"o"} |
+      | spaces        | {"spaces":"s"}       |

@@ -18,7 +18,7 @@ public class OrgSpaceApiTests
             .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
             .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent("{\"orgs\":\"o\"}")
+                Content = new StringContent("{\"organizations\":\"o\"}")
             });
         var services = new ServiceCollection();
         services.AddSingleton<IOrgSpaceApi>(_ => new OrgSpaceApi(new HttpClient(handler.Object), "http://localhost"));
@@ -27,7 +27,7 @@ public class OrgSpaceApiTests
 
         var json = await api.GetAllOrgsAsync();
 
-        Assert.Equal("{\"orgs\":\"o\"}", json);
+        Assert.Equal("{\"organizations\":\"o\"}", json);
     }
 
     [Fact]

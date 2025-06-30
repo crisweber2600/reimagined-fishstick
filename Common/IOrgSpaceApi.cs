@@ -35,8 +35,8 @@ public class OrgSpaceApi : IOrgSpaceApi
     }
 
     /// TASK: Get all orgs as raw JSON with simple retry
-    public Task<string> GetAllOrgsAsync() => GetWithRetryAsync($"{_baseUri}/v3/orgs");
+    public Task<string> GetAllOrgsAsync() => GetWithRetryAsync($"{_baseUri}/v3/organizations");
 
     /// TASK: Get spaces for an org as raw JSON with simple retry
-    public Task<string> GetSpacesForOrgAsync(string orgId) => GetWithRetryAsync($"{_baseUri}/v3/orgs/{orgId}/spaces");
+    public Task<string> GetSpacesForOrgAsync(string orgId) => GetWithRetryAsync($"{_baseUri}/v3/organizations/{orgId}/spaces");
 }
