@@ -1,0 +1,7 @@
+root = true
+
+[*.cs]
+dotnet_style_require_accessibility_modifiers = always
+dotnet_style_qualification_for_field = false
+dotnet_style_prefer_explicit_type_in_member_access = true
+dotnet_default_accessibility_modifier = internal
